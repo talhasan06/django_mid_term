@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="container py-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for task in data %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{task.title}}</h5>
+                        <p class="card-text">{{task.description}}</p>
+                        <p>Category: 
+                            {% for cate in task.categories.all %}
+                                <button class="btn btn-warning disabled">{{cate.category_name}}</button>
+                            {% endfor %}
+                        </p>
+                        {% if not task.is_completed %}
+                            <a href="{% url 'edit_task' task.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                        {% else %}
+                        <button type="button" class="btn btn-success">Completed</button>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">{{task.task_assign_date}}</small>
+                      </div>
+                </div>
+            </div>
+        {% endfor %}    
+    </div>
+</div>
+{% endblock %}
